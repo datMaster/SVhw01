@@ -56,9 +56,10 @@ public class MainActivity extends ActionBarActivity {
 		private Button reloadButton;
 		private Button pushMeButton;
 		private TextView messageView;
-		private CountDownTimer timer;
+		private CountDownTimer timer10sec;
+		private CountDownTimer timer30sec;
 		private int pressedCounter;
-		private Boolean timerStatus = false;
+		private Boolean timer10Status = false;
 		private Animation anim = null;			
 		
 		public PlaceholderFragment() {
@@ -76,26 +77,28 @@ public class MainActivity extends ActionBarActivity {
 			reloadButton.setOnClickListener(this);
 			pushMeButton.setOnClickListener(this);
 			reloadButton.setVisibility(View.GONE);
-			timer = new CountDownTimer(Constants.TIMER_IN_FUTURE, Constants.TIMER_INTERVAL) {
+			timer10sec = new CountDownTimer(Constants.TIMER_IN_FUTURE10, Constants.TIMER_INTERVAL) {
 				
 				@Override
 				public void onTick(long millisUntilFinished) {					
-					switch ((int)millisUntilFinished / Constants.ONE_SECOND) {
-					case Constants.PUSH_30_SECOND_TO_END:
-						if(pressedCounter == Constants.ONE_PRESS)
-							reload();
-						break;
-					case Constants.PUSH_10_SECOND_TO_END : 
-						reload(); 
-						break;
-					default:
-						break;
-					}
+					
 				}
 				
 				@Override
 				public void onFinish() {
 					reload();					
+				}
+			};
+			
+			timer30sec = new CountDownTimer(Constants.TIMER_IN_FUTURE30, Constants.TIMER_INTERVAL) {
+				@Override
+				public void onTick(long millisUntilFinished) {					
+					
+				}
+				
+				@Override
+				public void onFinish() {
+					reload30();					
 				}
 			};
 			
@@ -106,9 +109,13 @@ public class MainActivity extends ActionBarActivity {
 		public void onClick(View v) {			
 			switch (v.getId()) {
 			case R.id.buttonPushMe : {
-				if(!timerStatus) {
-					timer.start();
-					timerStatus = true;					
+				if(!timer10Status) {
+					timer10sec.start();
+					timer10Status = true;					
+				}
+				else {
+					timer10sec.cancel();
+					timer10sec.start();
 				}
 				pressedCounter ++;
 				checkPreseedCounter();
@@ -135,11 +142,13 @@ public class MainActivity extends ActionBarActivity {
 			case Constants.TEN_PRESSES: messageView.setText(getText(R.string.label_ten));				
 				break;
 			case Constants.TWENTY_PRESSES: { 
-				messageView.setText(getText(R.string.label_twenty));				
-				anim = (Animation)AnimationUtils.loadAnimation(getActivity(), R.anim.leftright);
-				reloadButton.startAnimation(anim);
-				reloadButton.setVisibility(View.VISIBLE);				
+				messageView.setText(getText(R.string.label_twenty));
 				pushMeButton.setEnabled(false);	
+				if(timer10Status){
+					timer30sec.start();
+					timer10sec.cancel();
+					timer10Status = false;
+				}
 				break;
 			}
 			default:
@@ -149,12 +158,17 @@ public class MainActivity extends ActionBarActivity {
 		
 		private void reload() {				
 			pressedCounter = 0;
-			timerStatus = false;
-			timer.cancel();			
+			timer10Status = false;				
 			pushMeButton.setEnabled(true);
 			reloadButton.setVisibility(View.GONE);
 			messageView.setText(R.string.hello_world);
-		}				
+		}
+		
+		private void reload30() {			
+			anim = (Animation)AnimationUtils.loadAnimation(getActivity(), R.anim.leftright);				
+			reloadButton.startAnimation(anim);
+			reloadButton.setVisibility(View.VISIBLE);							
+		}
 	}	
 
 }

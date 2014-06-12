@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SVTask1</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hello, World!</string>
     <string name="action_settings">Settings</string>
 	<string name="button_push_me">Push Me!</string>
 	<string name="button_reload">Reload</string>

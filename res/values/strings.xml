@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SVTask1</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+	<string name="button_push_me">Push Me!</string>
+	<string name="button_reload">Reload</string>
+	<string name="label_one">You pushed a button</string>
+	<string name="label_two">You pushed it again</string>
+	<string name="label_three">Hey! Stop pushing it!</string>
+	<string name="label_sixt">Really, I\'m kidding. Stop pushing the button!</string>
+	<string name="label_ten">I mean it! STOP!</string>
+	<string name="label_twenty">Okay! You\'ve got it!</string>
+</resources>
